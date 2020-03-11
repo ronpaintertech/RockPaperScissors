@@ -1,0 +1,2 @@
+rootProject.name='Rock Paper Scissors'
+include ':app'
