@@ -11,7 +11,7 @@ public class GameController extends ContextWrapper {
 
     private static final String TAG = "GameController";
 
-    GameControllerCallback gcCallback = null;
+    GameControllerCallbacks gcCallback = null;
 
     private Player player1;
     private Player player2;
@@ -32,7 +32,7 @@ public class GameController extends ContextWrapper {
         countMessage[5] = getString(R.string.tooLate);
     }
 
-    public GameController(@NonNull Context base, @NonNull GameControllerCallback callback) {
+    public GameController(@NonNull Context base, @NonNull GameControllerCallbacks callback) {
         this(base);
         this.gcCallback = callback;
     }
@@ -41,7 +41,7 @@ public class GameController extends ContextWrapper {
         Log.d(TAG, "startNewRound: starts");
         player1.resetChoice();
         player2.resetChoice();
-        gcCallback.disablePieces();
+        gcCallback.piecesEnabled(false);
         gcCallback.updateOpponentMessage("");
         msgI = 0;
 
@@ -55,13 +55,13 @@ public class GameController extends ContextWrapper {
                 Log.d(TAG, "onTick: " + msgI + " - " + countMessage[msgI]);
 
                 if (countMessage[msgI].equals(getString(R.string.shoot))) {
-                    gcCallback.enablePieces();
+                    gcCallback.piecesEnabled(true);
                 }
 
                 gcCallback.updateMessage(countMessage[msgI]);
 
                 if (countMessage[msgI].equals(getString(R.string.tooLate))) {
-                    gcCallback.disablePieces();
+                    gcCallback.piecesEnabled(false);
                     gcCallback.tooLate();
                 }
 

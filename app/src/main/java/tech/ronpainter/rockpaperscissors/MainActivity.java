@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements GameControllerCallback {
+public class MainActivity extends AppCompatActivity implements GameControllerCallbacks,
+            PiecesButtonFragment.OnPieceClickCallback {
     private static final String TAG = "MainActivity";
 
     private TextView txtMessage;
@@ -21,9 +22,9 @@ public class MainActivity extends AppCompatActivity implements GameControllerCal
 
     GameController gameController;
 
-    Button btnRock;
-    Button btnPaper;
-    Button btnScissors;
+    PiecesButtonFragment fragment;
+
+    Button btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,43 +37,17 @@ public class MainActivity extends AppCompatActivity implements GameControllerCal
         gameController.setPlayer1(player1);
         gameController.setPlayer2(player2);
 
+        fragment = new PiecesButtonFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.input_container, fragment).commit();
 
-        btnRock = findViewById(R.id.btnRock);
-        btnPaper = findViewById(R.id.btnPaper);
-        btnScissors = findViewById(R.id.btnScissors);
-        disablePieces();
-        Button btnStart = findViewById(R.id.btnStart);
+        btnStart = findViewById(R.id.btnStart);
         this.txtMessage = findViewById(R.id.txtMessage);
         this.txtOpponentMessage = findViewById(R.id.txtOpponentMessage);
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gameController.stopCountdown();
-                disablePieces();
-                Button btnPicked = (Button) v;
-                String btnPickedText = btnPicked.getText().toString();
-
-                if (btnPickedText.equals(getString(R.string.rock))) {
-                    gameController.setPlayerChoice(gameController.getPlayer1(), PieceType.ROCK);
-                } else if (btnPickedText.equals(getString(R.string.paper))) {
-                    gameController.setPlayerChoice(gameController.getPlayer1(), PieceType.PAPER);
-                } else if (btnPickedText.equals(getString(R.string.scissors))){
-                    gameController.setPlayerChoice(gameController.getPlayer1(), PieceType.SCISSORS);
-                }
-                gameController.getPlayer2().setRandomChoice();
-                txtMessage.setText("You: "+ gameController.getOutComeMsg(1));
-                txtOpponentMessage.setText("Opponent: " + gameController.getOutComeMsg(2) + " (" + gameController.getPlayer2().getChoice().getPieceType() + ")");
-           }
-        };
-
-        btnRock.setOnClickListener(listener);
-        btnPaper.setOnClickListener(listener);
-        btnScissors.setOnClickListener(listener);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnStart.setEnabled(false);
                 gameController.startNewRound();
             }
         });
@@ -102,6 +77,19 @@ public class MainActivity extends AppCompatActivity implements GameControllerCal
     }
 
     @Override
+    public void onChoicePicked(PieceType pieceType) {
+        gameController.stopCountdown();
+        piecesEnabled(false);
+
+        gameController.setPlayerChoice(gameController.getPlayer1(), pieceType);
+
+        gameController.getPlayer2().setRandomChoice();
+        txtMessage.setText("You: "+ gameController.getOutComeMsg(1));
+        txtOpponentMessage.setText("Opponent: " + gameController.getOutComeMsg(2) + " (" + gameController.getPlayer2().getChoice().getPieceType() + ")");
+        btnStart.setEnabled(true);
+    }
+
+    @Override
     public void updateMessage(String msg) {
         this.txtMessage.setText(msg);
     }
@@ -116,19 +104,12 @@ public class MainActivity extends AppCompatActivity implements GameControllerCal
         gameController.getPlayer2().setRandomChoice();
         txtMessage.setText("You were too late: "+ gameController.getOutComeMsg(1));
         txtOpponentMessage.setText("Opponent: " + gameController.getOutComeMsg(2) + " (" + gameController.getPlayer2().getChoice().getPieceType() + ")");
+        btnStart.setEnabled(true);
     }
 
     @Override
-    public void disablePieces() {
-        btnRock.setEnabled(false);
-        btnPaper.setEnabled(false);
-        btnScissors.setEnabled(false);
+    public void piecesEnabled(boolean enable) {
+        fragment.piecesEnabled(enable);
     }
 
-    @Override
-    public void enablePieces() {
-        btnRock.setEnabled(true);
-        btnPaper.setEnabled(true);
-        btnScissors.setEnabled(true);
-    }
 }
