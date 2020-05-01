@@ -1,5 +1,8 @@
 package tech.ronpainter.rockpaperscissors;
 
+/**
+ * Abstract class for all pieces (Rock, Paper, Scissors)
+ */
 public abstract class GamePiece {
 
     PieceType PIECE_TYPE;

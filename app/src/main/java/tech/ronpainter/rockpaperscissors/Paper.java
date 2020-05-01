@@ -1,5 +1,8 @@
 package tech.ronpainter.rockpaperscissors;
 
+/**
+ * Paper game piece and outcome vs other game pieces
+ */
 public class Paper extends GamePiece {
 
     public Paper() {

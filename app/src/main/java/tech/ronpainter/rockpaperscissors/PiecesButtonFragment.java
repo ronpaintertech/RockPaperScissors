@@ -11,6 +11,9 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+/**
+ * Creates and handles the Rock, Paper, Scissor buttons
+ */
 public class PiecesButtonFragment extends Fragment {
 
     private Button btnRock;

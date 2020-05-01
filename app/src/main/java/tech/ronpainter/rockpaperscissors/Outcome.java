@@ -4,6 +4,9 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Enums and returns the outcome message
+ */
 public enum Outcome {
     WIN,
     LOSS,

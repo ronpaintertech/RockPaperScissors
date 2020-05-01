@@ -4,6 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Holds info on the player, including what piece they chose (or a random pick) and the outcome
+ * of their choice.
+ */
 public class Player {
     private static final String TAG = "Player";
     private boolean isComputer = false;

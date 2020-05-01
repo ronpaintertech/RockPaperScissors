@@ -12,4 +12,6 @@
     <string name="loss">Lost</string>
     <string name="tie">Tied</string>
     <string name="unknown">Unknown</string>
+    <string name="buttons">Buttons</string>
+    <string name="camera_ai">Camera / AI</string>
 </resources>

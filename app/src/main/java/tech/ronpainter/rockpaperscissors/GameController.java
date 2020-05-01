@@ -7,6 +7,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Central controller for the game.
+ * Stores the players, starts the countdown, calls for determining outcome, resets the round
+ */
 public class GameController extends ContextWrapper {
 
     private static final String TAG = "GameController";
