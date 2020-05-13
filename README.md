@@ -8,4 +8,6 @@ After choosing the Start button, a countdown starts "Ready?, Rock, Paper, Scisso
 Player 1 has a second to make a choice or they will be "Too Late"
 Once the player has chosen Rock, Paper or Scissors, messages are displayed showing the computers choice and if there was a Win, Loss, or Tie.
 
+A quick video demonstration can be seen on my website [ronpainter.tech](http://ronpainter.tech/)
+
 ![](RockPaperScissorsDemo.jpg)
